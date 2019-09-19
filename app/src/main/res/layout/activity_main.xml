@@ -10,7 +10,7 @@
     <GridView
             android:id="@+id/gridview"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:horizontalSpacing="5dp"
             android:numColumns="auto_fit"
@@ -68,5 +68,11 @@
             android:id="@+id/generate_matrx_btn"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="GENERATE MATRIX"/>
+
+    <Button
+            android:id="@+id/generate_randomnumber_btn"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="GENERATE RANDOM NUMBER"/>
+
 
 </LinearLayout>

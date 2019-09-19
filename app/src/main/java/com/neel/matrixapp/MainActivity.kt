@@ -1,10 +1,8 @@
 package com.neel.matrixapp
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.widget.*
 
 class MainActivity : AppCompatActivity() {
@@ -35,15 +33,25 @@ class MainActivity : AppCompatActivity() {
             "Item 22"
         )
 
+    var row_int_global: Int = 5;
+    var column_int_global: Int = 5;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val generate_matrx_btn = findViewById(R.id.generate_matrx_btn) as Button
+        val generate_randomnumber_btn = findViewById(R.id.generate_randomnumber_btn) as Button
         val columns_edt = findViewById(R.id.columns_edt) as EditText
         val rows_edt = findViewById(R.id.rows_edt) as EditText
         val gridview = findViewById(R.id.gridview) as GridView
 
+
+        var lastgeneratedList: ArrayList<Int> = getNumbersList(column_int_global, row_int_global)
+        //set default 5X5 matrix
+        gridview.numColumns = 5;
+        val adapter = GridViewAdapter(this, lastgeneratedList)
+        gridview.adapter = adapter
 
 
         gridview.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
@@ -52,6 +60,15 @@ class MainActivity : AppCompatActivity() {
                 this@MainActivity, " Clicked Position: " + (position + 1),
                 Toast.LENGTH_SHORT
             ).show()
+        }
+
+
+        generate_randomnumber_btn.setOnClickListener {
+
+            val getrandomPos = (0..row_int_global * column_int_global).random()
+            val getrandomNumber = lastgeneratedList.get(getrandomPos)
+
+
 
         }
 
@@ -60,8 +77,7 @@ class MainActivity : AppCompatActivity() {
             // your code to perform when the user clicks on the button
             val column_str: String = columns_edt.text.toString().trim();
             val row_str: String = rows_edt.text.toString().trim();
-            var row_int: Int = 0;
-            var column_int: Int = 0;
+
             try {
                 //Validate for emptry imputs
                 if (TextUtils.isEmpty(row_str)) {
@@ -71,15 +87,16 @@ class MainActivity : AppCompatActivity() {
                     columns_edt.requestFocus()
                     columns_edt.error = "Please enter value."
                 } else {
-                    row_int = row_str.toInt()
-                    column_int = column_str.toInt()
-                    if (validateDetails(row_int, column_int, rows_edt, columns_edt)) {
+                    row_int_global = row_str.toInt()
+                    column_int_global = column_str.toInt()
+                    if (validateDetails(row_int_global, column_int_global, rows_edt, columns_edt)) {
 
                         //SET GRIDVIEW ADAPTER
 
+                        lastgeneratedList = getNumbersList(column_int_global, row_int_global);
                         // Get an instance of base adapter
-                        gridview.numColumns = column_int;
-                        val adapter = GridViewAdapter(this, colors(column_int, row_int))
+                        gridview.numColumns = column_int_global;
+                        val adapter = GridViewAdapter(this, lastgeneratedList)
                         gridview.adapter = adapter
 
                     }
@@ -107,7 +124,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Custom method to generate list of color name value pair
-    private fun colors(columns: Int, row: Int): LinkedHashMap<Int, String> {
+    private fun getNumbersList(columns: Int, row: Int): ArrayList<Int> {
         /*return listOf(
             Pair("INDIANRED", Color.parseColor("#CD5C5C")),
             Pair("LIGHTCORAL", Color.parseColor("#F08080")),
@@ -126,30 +143,51 @@ class MainActivity : AppCompatActivity() {
             Pair("MEDIUMVIOLETRED", Color.parseColor("#C71585")),
             Pair("PALEVIOLETRED", Color.parseColor("#DB7093"))
         )*/
-
-        var hashMap: LinkedHashMap<Int, String> = LinkedHashMap<Int, String>() //define empty hashmap
+        /*var hashMap: LinkedHashMap<Int, String> = LinkedHashMap<Int, String>() //define empty hashmap
         var total_count = columns * row;
 
         for (i in 0..total_count) {
             println(i) // 0,1,2,3,4,5   --> upto 5
             hashMap = generateHashmap(total_count, hashMap)
         }
-        return hashMap;
+        return hashMap;*/
 
+        var list: ArrayList<Int> = ArrayList()//define empty hashmap
+        var total_count = columns * row;
 
-    }
-
-    private fun generateHashmap(total_count: Int, hashMap: LinkedHashMap<Int, String>): LinkedHashMap<Int, String> {
-        var generaterandom = (0..total_count).random();
-        var insertedcheck = hashMap.get(generaterandom);
-
-        if (TextUtils.isEmpty(insertedcheck)) {
-            hashMap.put(generaterandom, "DEFAULT");
-        } else {
-            generateHashmap(total_count, hashMap)
+        for (i in 0..total_count - 1) {
+            println(i) // 0,1,2,3,4,5   --> upto 5
+            list = generateList(total_count, list)
         }
-        return hashMap;
+        return list;
+
+
     }
+
+    /* private fun generateHashmap(total_count: Int, hashMap: LinkedHashMap<Int, String>): LinkedHashMap<Int, String> {
+         var generaterandom = (0..total_count).random();
+         var insertedcheck = hashMap.get(generaterandom);
+
+         if (TextUtils.isEmpty(insertedcheck)) {
+             hashMap.put(generaterandom, "DEFAULT");
+         } else {
+             generateHashmap(total_count, hashMap)
+         }
+         return hashMap;
+     }*/
+
+    private fun generateList(total_count: Int, arrayListtemp: ArrayList<Int>): ArrayList<Int> {
+        var generaterandom = (0..total_count).random();
+        var insertedcheck = arrayListtemp.contains(generaterandom);
+
+        if (!insertedcheck) {
+            arrayListtemp.add(generaterandom);
+        } else {
+            generateList(total_count, arrayListtemp)
+        }
+        return arrayListtemp;
+    }
+
 
 }
 

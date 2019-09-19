@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 
 
-class GridViewAdapter(private val mContext: Context, private val lists: LinkedHashMap<Int, String>) : BaseAdapter() {
+class GridViewAdapter(private val mContext: Context, private val lists: ArrayList<Int>) : BaseAdapter() {
 
     //private val list = colors()
 
@@ -32,15 +32,8 @@ class GridViewAdapter(private val mContext: Context, private val lists: LinkedHa
         val view = inflater.inflate(R.layout.grid_item, null)
         val randomnumber_tv = view.findViewById(R.id.randomnumber_tv) as TextView
 
-        var currentkey = 0;
-        for (key in lists.keys) {
-            if (key == position)
-                println("Element at key $key : ${lists[key]}")
-        }
 
-
-
-        randomnumber_tv.setText(lists[position])
+        randomnumber_tv.setText(lists[position].toString())
         randomnumber_tv.setOnClickListener {
             // Show selected color in a toast message
             Toast.makeText(
