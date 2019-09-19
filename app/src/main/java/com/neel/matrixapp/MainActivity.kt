@@ -4,6 +4,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.widget.*
 
 class MainActivity : AppCompatActivity() {
@@ -77,7 +78,8 @@ class MainActivity : AppCompatActivity() {
                         //SET GRIDVIEW ADAPTER
 
                         // Get an instance of base adapter
-                        val adapter = GridViewAdapter(this, colors())
+                        gridview.numColumns = column_int;
+                        val adapter = GridViewAdapter(this, colors(column_int, row_int))
                         gridview.adapter = adapter
 
                     }
@@ -105,8 +107,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Custom method to generate list of color name value pair
-    private fun colors(): List<Pair<String, Int>> {
-        return listOf(
+    private fun colors(columns: Int, row: Int): LinkedHashMap<Int, String> {
+        /*return listOf(
             Pair("INDIANRED", Color.parseColor("#CD5C5C")),
             Pair("LIGHTCORAL", Color.parseColor("#F08080")),
             Pair("SALMON", Color.parseColor("#FA8072")),
@@ -123,7 +125,30 @@ class MainActivity : AppCompatActivity() {
             Pair("DEEPPINK", Color.parseColor("#FF1493")),
             Pair("MEDIUMVIOLETRED", Color.parseColor("#C71585")),
             Pair("PALEVIOLETRED", Color.parseColor("#DB7093"))
-        )
+        )*/
+
+        var hashMap: LinkedHashMap<Int, String> = LinkedHashMap<Int, String>() //define empty hashmap
+        var total_count = columns * row;
+
+        for (i in 0..total_count) {
+            println(i) // 0,1,2,3,4,5   --> upto 5
+            hashMap = generateHashmap(total_count, hashMap)
+        }
+        return hashMap;
+
+
+    }
+
+    private fun generateHashmap(total_count: Int, hashMap: LinkedHashMap<Int, String>): LinkedHashMap<Int, String> {
+        var generaterandom = (0..total_count).random();
+        var insertedcheck = hashMap.get(generaterandom);
+
+        if (TextUtils.isEmpty(insertedcheck)) {
+            hashMap.put(generaterandom, "DEFAULT");
+        } else {
+            generateHashmap(total_count, hashMap)
+        }
+        return hashMap;
     }
 
 }
