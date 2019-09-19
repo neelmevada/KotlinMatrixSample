@@ -1,12 +1,39 @@
 package com.neel.matrixapp
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val itemList: Array<String>
+        get() = arrayOf(
+            "Item 1",
+            "Item 2",
+            "Item 3",
+            "Item 4",
+            "Item 5",
+            "Item 6",
+            "Item 7",
+            "Item 8",
+            "Item 9",
+            "Item 10",
+            "Item 11",
+            "Item 12",
+            "Item 13",
+            "Item 14",
+            "Item 15",
+            "Item 16",
+            "Item 17",
+            "Item 18",
+            "Item 19",
+            "Item 20",
+            "Item 21",
+            "Item 22"
+        )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,6 +41,18 @@ class MainActivity : AppCompatActivity() {
         val generate_matrx_btn = findViewById(R.id.generate_matrx_btn) as Button
         val columns_edt = findViewById(R.id.columns_edt) as EditText
         val rows_edt = findViewById(R.id.rows_edt) as EditText
+        val gridview = findViewById(R.id.gridview) as GridView
+
+
+
+        gridview.onItemClickListener = AdapterView.OnItemClickListener { parent, v, position, id ->
+            // Write code to perform action when item is clicked.
+            Toast.makeText(
+                this@MainActivity, " Clicked Position: " + (position + 1),
+                Toast.LENGTH_SHORT
+            ).show()
+
+        }
 
 
         generate_matrx_btn.setOnClickListener {
@@ -35,6 +74,11 @@ class MainActivity : AppCompatActivity() {
                     column_int = column_str.toInt()
                     if (validateDetails(row_int, column_int, rows_edt, columns_edt)) {
 
+                        //SET GRIDVIEW ADAPTER
+
+                        // Get an instance of base adapter
+                        val adapter = GridViewAdapter(this, colors())
+                        gridview.adapter = adapter
 
                     }
                 }
@@ -58,6 +102,28 @@ class MainActivity : AppCompatActivity() {
         } else {
             return true
         }
+    }
+
+    // Custom method to generate list of color name value pair
+    private fun colors(): List<Pair<String, Int>> {
+        return listOf(
+            Pair("INDIANRED", Color.parseColor("#CD5C5C")),
+            Pair("LIGHTCORAL", Color.parseColor("#F08080")),
+            Pair("SALMON", Color.parseColor("#FA8072")),
+            Pair("DARKSALMON", Color.parseColor("#E9967A")),
+            Pair("LIGHTSALMON", Color.parseColor("#FFA07A")),
+            Pair("CRIMSON", Color.parseColor("#DC143C")),
+            Pair("RED", Color.parseColor("#FF0000")),
+            Pair("FIREBRICK", Color.parseColor("#B22222")),
+            Pair("DARKRED", Color.parseColor("#8B0000")),
+
+            Pair("PINK", Color.parseColor("#FFC0CB")),
+            Pair("LIGHTPINK", Color.parseColor("#FFB6C1")),
+            Pair("HOTPINK", Color.parseColor("#FF69B4")),
+            Pair("DEEPPINK", Color.parseColor("#FF1493")),
+            Pair("MEDIUMVIOLETRED", Color.parseColor("#C71585")),
+            Pair("PALEVIOLETRED", Color.parseColor("#DB7093"))
+        )
     }
 
 }

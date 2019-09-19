@@ -7,6 +7,15 @@
               android:orientation="vertical"
               tools:context=".MainActivity">
 
+    <GridView
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:horizontalSpacing="5dp"
+            android:numColumns="auto_fit"
+            android:padding="5dp"
+            android:verticalSpacing="5dp"/>
 
     <LinearLayout
             android:layout_width="match_parent"
