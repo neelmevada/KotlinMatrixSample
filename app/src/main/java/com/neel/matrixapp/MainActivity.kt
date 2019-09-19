@@ -63,6 +63,8 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        
+
         generate_randomnumber_btn.setOnClickListener {
 
             val getrandomPos = (0..row_int_global * column_int_global).random()
