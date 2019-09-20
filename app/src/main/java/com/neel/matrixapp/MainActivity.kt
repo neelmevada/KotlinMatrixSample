@@ -68,6 +68,9 @@ class MainActivity : AppCompatActivity() {
         //Generate random number click & change bg color
         generate_randomnumber_btn.setOnClickListener {
             getrandomPos = getRandomNonRepeatedPos(lastgeneratedList)
+            if (getrandomPos == 0)
+                getrandomPos = getRandomNonRepeatedPos(lastgeneratedList)
+
             getrandomNumber = lastgeneratedList.get(getrandomPos).number
             lastgeneratedList.get(getrandomPos).color = getRandomColorCode()
             adapter.notifyDataSetChanged()
@@ -108,7 +111,6 @@ class MainActivity : AppCompatActivity() {
         }
         return rnd
     }
-
 
     private fun getRandomColorCode(): Int {
         val rnd = Random()
