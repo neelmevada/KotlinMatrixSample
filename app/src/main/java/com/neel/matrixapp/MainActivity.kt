@@ -68,8 +68,8 @@ class MainActivity : AppCompatActivity() {
         //Generate random number click & change bg color
         generate_randomnumber_btn.setOnClickListener {
             getrandomPos = getRandomNonRepeatedPos(lastgeneratedList)
-            if (getrandomPos == 0)
-                getrandomPos = getRandomNonRepeatedPos(lastgeneratedList)
+            /*if (getrandomPos == 0)
+                getrandomPos = getRandomNonRepeatedPos(lastgeneratedList)*/
 
             getrandomNumber = lastgeneratedList.get(getrandomPos).number
             lastgeneratedList.get(getrandomPos).color = getRandomColorCode()
@@ -106,9 +106,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun getRandomNonRepeatedPos(lastgeneratedList: ArrayList<GridItem>): Int {
         val rnd = (1..(row_int_global * column_int_global) - 1).random()
-        if (lastgeneratedList.get(rnd).color != 0) {
+        /*if (lastgeneratedList.get(rnd).color != 0) {
             getRandomNonRepeatedPos(lastgeneratedList)
-        }
+        }*/
         return rnd
     }
 
